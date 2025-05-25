@@ -1,0 +1,446 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+<style>
+  /* الخطوط والاتجاه */
+  body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    background: #FFFFFF;
+    color: #eee;
+  }
+
+  /* الهيدر */
+  header.masthead {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+    padding: 50px 0;
+    text-align: center;
+  }
+
+  header.masthead img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    transition: transform 0.4s ease;
+  }
+  header.masthead img:hover {
+    transform: scale(1.1);
+  }
+
+  header.masthead h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-top: 20px;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(0,0,0,0.6);
+  }
+
+  header.masthead h2 {
+    font-weight: 300;
+    margin: 5px 0;
+    color: #bbdefb;
+  }
+
+  header.masthead button.btn-primary {
+    margin-top: 30px;
+    width: 260px;
+    height: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(25, 118, 210, 0.6);
+    transition: background 0.4s ease, transform 0.3s ease;
+  }
+  header.masthead button.btn-primary:hover {
+    background: #0d47a1;
+    transform: scale(1.05);
+  }
+
+  /* القسم: اخر المقالات */
+  #portfolio {
+    padding: 50px 0;
+        background: #F8F9FA;
+  }
+
+  #portfolio h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #90caf9;
+    animation: bounce 2s infinite;
+  }
+
+     /*أنيميشن bounce*/
+    keyframes bounce { 
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+   }
+
+  /* بحث */
+  .navigation-clean-search {
+    background: #f1f3f5; /* رمادي فاتح جدًا */
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.search-field {
+    background: #ffffff; /* أبيض ناعم */
+    color: #333;          /* رمادي غامق لراحة العين */
+    border: 1px solid #ced4da;
+    border-radius: 30px;
+    padding: 10px 20px;
+    width: 250px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-field::placeholder {
+    color: #aaa; /* رمادي متوسط للـ placeholder */
+}
+
+.search-field:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(100, 149, 237, 0.3); /* ظل أزرق ناعم */
+    border-color: #80bdff; /* حدود بلون أزرق فاتح */
+    background: #f8f9fa;   /* رمادي أبيض */
+    color: #000;
+}
+
+  /* أزرار التصنيفات */
+  .navbar-nav form input[type="submit"] {
+    cursor: pointer;
+    border-radius: 25px;
+    padding: 6px 15px;
+    font-weight: 600;
+    color: #eee;
+    background: #455a64;
+    border: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .navbar-nav form input[type="submit"]:hover {
+    background: #1e88e5;
+    transform: scale(1.1);
+    color: white;
+    box-shadow: 0 0 8px #1e88e5;
+  }
+  .navbar-nav form input.bg-primary {
+    background: #0d47a1 !important;
+  }
+  .navbar-nav form input.bg-primary:hover {
+    background: #1976d2 !important;
+  }
+
+  /* بطاقات المقالات */
+  .card {
+        background: #F0F8FF;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(30, 136, 229, 0.8);
+  }
+  .card-img-top {
+    border-radius: 15px 15px 0 0;
+    height: 300px;
+    object-fit: cover;
+  }
+  .card-title {
+        color: #1E1E2F;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-align: center;
+  }
+  .btn-primary {
+    background: #1976d2;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    padding: 8px 20px;
+    width: 140px;
+    transition: background 0.4s ease, transform 0.3s ease;
+  }
+  .btn-primary:hover {
+    background: #1565c0;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #1565c0;
+  }
+
+  /* خط الفقرات */
+  hr.star-light, hr.star-dark {
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, #42a5f5, #1e88e5);
+    border: none;
+    margin: 20px auto 40px;
+    border-radius: 10px;
+  }
+
+  /* قسم حول الموقع */
+  #about {
+    padding: 50px 0;
+    background: #0d47a1;
+  }
+  #about p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+  #about .btn-outline-light {
+    font-size: 1.2rem;
+    border-radius: 30px;
+    padding: 12px 30px;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+  #about .btn-outline-light:hover {
+    background: #1976d2;
+    color: white;
+  }
+
+
+  /* قسم تواصل معنا */
+  #contact {
+    padding: 50px 0;
+        background: #F8F9FA;
+    color: #eee;
+  }
+
+  #contact h2 {
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .form-floating > label {
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .form-control {
+    border-radius: 20px;
+    background: #263238;
+    border: none;
+    color: #eee;
+    padding: 15px 20px;
+    font-size: 1rem;
+  }
+  .form-control:focus {
+    background: #1e88e5;
+    color: white;
+    box-shadow: 0 0 8px #1e88e5;
+    border: none;
+  }
+
+  button#sendMessageButton {
+    border-radius: 30px;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: #1976d2;
+    border: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  button#sendMessageButton:hover {
+    background: #1565c0;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #1565c0;
+  }
+
+  /* التصفح الصفحات */
+  nav.pagination {
+    margin-top: 40px;
+  }
+  nav.pagination ul {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  nav.pagination input.form-control {
+    cursor: pointer;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-weight: 700;
+    color: #eee;
+    background: #1976d2;
+    border: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    width: 110px;
+  }
+  nav.pagination input.form-control.bg-danger {
+    background: #d32f2f;
+  }
+  nav.pagination input.form-control.bg-info {
+    background: #0288d1;
+  }
+  nav.pagination input.form-control:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #42a5f5;
+  }
+</style>
+
+<header class="masthead">
+  <div class="container">
+    <img class="img-fluid d-block mx-auto mb-4 rounded-circle" src="~/img/MRX.png" alt="شعار الموقع" />
+    <h1>مقالاتي</h1>
+    <hr class="border border-primary w-25 mb-4 " />
+    <h2>مرحبا بك في موقع مقالاتي</h2>
+    <h2 style="margin: 11px; font-size: 21px;">يسعدنا انضمامك معنا :)</h2>
+        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register" type="button"><i class="fa fa-sign-in"></i><span style="margin-inline-start: 15px;">انضم الان</span></a>
+  </div>
+</header>
+
+<section id="portfolio" class="portfolio">
+  <div class="container">
+    <h2 class="text-uppercase text-center">اخر المقالات</h2>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-secondary navigation-clean-search" style="margin: 20px 0;">
+      <div class="container">
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1" dir="ltr">
+          <form class="me-auto m-1" target="_self">
+            <div class="d-flex align-items-center">
+              <input type="hidden" value="Search" name="LoadState" />
+              <input class="form-control search-field" type="search" id="search-field"  name="search" placeholder="ابحث عن مقالة" />
+            </div>
+          </form>
+          <ul class="navbar-nav d-flex flex-row flex-wrap gap-2">
+            @{
+              foreach (var category in Model.ListOfCategory)
+              {
+                <form method="get">
+                  <input type="hidden" value="Category" name="LoadState" />
+                  <li class="nav-item m-1">
+                    <input type="submit" class="form-control m-2" data-bss-hover-animate="pulse" name="CategoryName" value="@category.Name" />
+                  </li>
+                </form>
+              }
+              <form method="get">
+                <input type="hidden" value="All" name="LoadState" />
+                <li class="nav-item m-1">
+                  <input type="submit" class="form-control m-2 bg-primary" data-bss-hover-animate="pulse" name="CategoryName" value="جميع الاصناف" />
+                </li>
+              </form>
+              }
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    @* <hr class="star-dark mb-5" /> *@
+
+    <div class="row row-cols-1 row-cols-md-3 g-4" dir="rtl">
+      @{
+        foreach (var item in Model.ListOfAuthorPost)
+        {
+          <div class="col" data-bss-hover-animate="pulse" style="margin-top: 10px;">
+            <div class="card">
+              <img class="card-img-top" src="~/Images/@item.PostImageUrl" alt="@item.PostTitle" />
+              <div class="card-body">
+                <h4 class="card-title">@item.PostTitle</h4>
+                <a class="btn btn-primary float-end" role="button" asp-page="/Article" asp-route-id="@item.Id">قراءة</a>
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+
+    <nav class="d-flex justify-content-center" style="margin-top: 40px;">
+      <ul class="pagination">
+        @{
+          if (Model.ListOfAuthorPost.Count == Model.NoOfItem)
+          {
+            <form method="get" class="m-2">
+              <input type="hidden" value="Next" name="LoadState" />
+              <input type="hidden" value="@Model.ListOfAuthorPost.Last().Id" name="id" />
+              <input type="submit" class="form-control bg-info" value="التالي" />
+            </form>
+          }
+          if (Model.ListOfAuthorPost.Count > 0)
+          {
+            <form method="get" class="m-2">
+              <input type="hidden" value="Prev" name="LoadState" />
+              <input type="hidden" value="@Model.ListOfAuthorPost.First().Id" name="id" />
+              <input type="submit" class="form-control bg-danger" value="السابق" />
+            </form>
+          }
+          <form method="get" class="m-2">
+            <input type="hidden" value="All" name="LoadState" />
+            <input type="submit" class="form-control bg-danger" value="الصفحة الاولى" />
+          </form>
+        }
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <h2 class="text-uppercase text-center text-white">حول الموقع</h2>
+        <hr class="border border-info border-3 w-50 opacity-75 mb-5" />
+        <div class="row align-items-center">
+      <div class="col">
+        <a class="lead text-center m-4 "style="color:white">
+          نحن نوفر لك الدعم الكامل لنشر مقالاتك ومشاركتها مع الاخرين. حيث ان موقع مقالتي يضمن لك كافة الحقوق للمقالات التي تنشرها على الموقع.
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a class="btn btn-outline-light btn-xl" role="button" href="#"><i class="fa fa-american-sign-language-interpreting me-2"></i><span>اشترك الان وانضم معنا</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <h2 class="text-uppercase text-center text-secondary mb-0">تواصل معنا</h2>
+        <hr class="border border-dark border-3 w-25 opacity-75 mb-5" />
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+                <form id="contactForm" name="sentMessage" novalidate class="text-center">
+                    <div class="control-group mb-3 form-floating">
+                        <input class="form-control text-center animate-input" type="text" id="name" required placeholder="الاسم" />
+                        <label for="name">الاسم</label>
+                        <small class="form-text text-danger help-block"></small>
+                    </div>
+                    <div class="control-group mb-3 form-floating">
+                        <input class="form-control text-center animate-input" type="email" id="email" required placeholder="البريد الالكتروني" />
+                        <label for="email">البريد الالكتروني</label>
+                        <small class="form-text text-danger help-block"></small>
+                    </div>
+                    <div class="control-group mb-3 form-floating">
+                        <input class="form-control text-center animate-input" type="tel" id="phone" required placeholder="رقم الهاتف" />
+                        <label for="phone">رقم الهاتف</label>
+                        <small class="form-text text-danger help-block"></small>
+                    </div>
+                    <div class="control-group mb-4 form-floating">
+                        <textarea class="form-control text-center animate-input" id="message" required placeholder="رسالتك" style="height: 150px;"></textarea>
+                        <label for="message">رسالتك</label>
+                        <small class="form-text text-danger help-block"></small>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-xl mx-auto d-block" id="sendMessageButton" type="submit">ارسل</button>
+                    </div>
+                </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> *@
+@* <script> *@
+@*     const inputs = document.querySelectorAll('.animate-input'); *@
+@*     inputs.forEach(input => { *@
+@*       input.addEventListener('focus', () => { *@
+@*         input.classList.add('animate__animated', 'animate__pulse'); *@
+@*       }); *@
+@*       input.addEventListener('blur', () => { *@
+@*         // إعادة الحالة بدون إزالة animate__animated للسلاسة *@
+@*         input.classList.remove('animate__pulse'); *@
+@*       }); *@
+@*     }); *@
+@* </script> *@
+
+
+

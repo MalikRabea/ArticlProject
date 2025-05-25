@@ -1,0 +1,27 @@
+﻿@model ArticlPro.Core.Category
+
+@{
+    ViewData["Title"] = "حذف";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="container py-4" style="font-family: 'Cairo', sans-serif; max-width: 600px;">
+    <h1 class="mb-4 text-center fw-bold">حذف الصنف الحالي</h1>
+
+    <h3 class="text-center mb-4 text-danger">هل أنت متأكد من هذا الإجراء؟</h3>
+
+    <div class="mb-4">
+        <h4>معلومات الصنف</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+        </dl>
+    </div>
+
+    <form asp-action="Delete" method="post" class="d-flex flex-column align-items-center gap-3">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger px-4">حذف</button>
+        <a asp-action="Index" class="btn btn-secondary">الرجوع إلى الأصناف</a>
+    </form>
+</section>

@@ -1,0 +1,34 @@
+﻿@model ArticlPro.Core.Category
+
+@{
+    ViewData["Title"] = "التعديل";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="container py-4" style="font-family: 'Cairo', sans-serif; max-width: 500px;">
+    <h1 class="mb-4 text-center fw-bold">تعديل الصنف</h1>
+
+    <h4 class="mb-3">بيانات الصنف</h4>
+    <hr />
+
+    <form asp-action="Edit" novalidate>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-semibold"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <a asp-action="Index" class="btn btn-secondary">الرجوع إلى الأصناف</a>
+            <button type="submit" class="btn btn-primary px-4">حفظ</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

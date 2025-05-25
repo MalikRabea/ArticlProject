@@ -1,0 +1,57 @@
+﻿@model ArticlPro.CoreView.AuthorView
+
+@{
+    ViewData["Title"] = "حذف";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="container py-4" style="font-family: 'Cairo', sans-serif;">
+    <h1 class="mb-3 text-center fw-bold">حذف</h1>
+
+    <h3 class="mb-4 text-center">هل أنت متأكد من هذا الإجراء؟</h3>
+
+    <div class="card shadow-sm p-4 mb-4">
+        <h4 class="mb-3">معلومات الناشر</h4>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.UserId)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.UserId)</dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.UserName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.UserName)</dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.FullName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.FullName)</dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.ProfileImageUrl)</dt>
+            <dd class="col-sm-9">
+                <img src="~/Images/@Model.ProfileImageUrl" alt="Profile Image" class="rounded-circle" width="80" height="80" />
+            </dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.Bio)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Bio)</dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.Facbook)</dt>
+            <dd class="col-sm-9">
+                <a href="@Model.Facbook" target="_blank" rel="noopener">@Model.Facbook</a>
+            </dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.Instagram)</dt>
+            <dd class="col-sm-9">
+                <a href="@Model.Instagram" target="_blank" rel="noopener">@Model.Instagram</a>
+            </dd>
+
+            <dt class="col-sm-3 fw-semibold">@Html.DisplayNameFor(model => model.Twitter)</dt>
+            <dd class="col-sm-9">
+                <a href="@Model.Twitter" target="_blank" rel="noopener">@Model.Twitter</a>
+            </dd>
+        </dl>
+
+        <form asp-action="Delete" method="post" class="text-center mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger px-4">حذف</button>
+            <a asp-action="Index" class="btn btn-secondary ms-3">العودة إلى القائمة</a>
+        </form>
+    </div>
+</section>

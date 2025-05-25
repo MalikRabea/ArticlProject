@@ -1,0 +1,45 @@
+﻿@page "{id:int}"
+@model ArticlPro.Pages.ArticleModel
+@{
+}
+
+<section class="article-clean d-flex flex-column justify-content-center align-items-center text-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <div class="intro mb-4">
+                    <h1 class="text-center" style="font-family: Cairo, sans-serif;">
+                        @Model.authorPost.PostTitle
+                    </h1>
+                    <p class="text-center mb-3">
+                        <span class="by">by</span>
+                        <a href="#">@Model.authorPost.FullName</a>
+                        <span class="date">@Model.authorPost.AddedDate</span>
+                    </p>
+                    <img class="img-fluid rounded shadow" src="~/Images/@Model.authorPost.PostImageUrl" alt="صورة المقالة" />
+                </div>
+                <div class="text mt-4">
+                    <p class="text-center" style="font-family: Cairo, sans-serif;">
+                        @Model.authorPost.PostDescription
+                    </p>
+                </div>
+
+                <!-- زر الرجوع -->
+                <div class="mt-5">
+                    <a href="/Index" class="btn btn-outline-primary btn-lg">
+                        <i class="fa fa-arrow-left me-2"></i> العودة للرئيسية
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div data-aos="zoom-in" class="social-icons mt-5">
+            <h3 style="font-family: Cairo, sans-serif;">شارك المقالة</h3>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="#"><i class="icon ion-social-twitter fs-3"></i></a>
+                <a href="#"><i class="icon ion-social-facebook fs-3"></i></a>
+                <a href="#"><i class="icon ion-social-snapchat fs-3"></i></a>
+            </div>
+        </div>
+    </div>
+</section>

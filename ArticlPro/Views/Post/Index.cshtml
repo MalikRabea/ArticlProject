@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ArticlPro.Core.AuthorPost>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="container py-5" style="font-family: 'Cairo', sans-serif;background-color: #f0f0f0;" data-aos="fade-up" data-aos-duration="1000">
+    <h1 class="mb-4 text-center fw-bold text-primary">بيانات المشاركات</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <a asp-action="Create" class="btn btn-success shadow-sm" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fa fa-plus me-2"></i> مشاركة جديدة
+        </a>
+
+        <form method="get" asp-action="Search" class="d-flex flex-grow-1 flex-md-grow-0" style="gap: 10px;" data-aos="fade-left" data-aos-delay="300">
+            <input type="search" name="SearchItem" class="form-control shadow-sm" placeholder="ابحث هنا..." />
+            <button type="submit" class="btn btn-primary shadow-sm">
+                <i class="fa fa-search"></i> بحث
+            </button>
+        </form>
+    </div>
+
+    <div class="table-responsive" data-aos="fade-up" data-aos-delay="400">
+        <table class="table table-hover align-middle text-center table-striped border shadow-sm">
+            <thead class="table-primary text-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.First().UserName)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().FullName)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().PostCategory)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().PostTitle)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().PostDescription)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().PostImageUrl)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().AddedDate)</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.UserName)</td>
+                        <td>@Html.DisplayFor(m => item.FullName)</td>
+                        <td>@Html.DisplayFor(m => item.PostCategory)</td>
+                        <td>@Html.DisplayFor(m => item.PostTitle)</td>
+                        <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            @Html.DisplayFor(m => item.PostDescription)
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.PostImageUrl))
+                            {
+                                <img src="~/Images/@item.PostImageUrl" alt="صورة المشاركة" class="rounded shadow-sm" style="width: 50px; height: 50px; object-fit: cover;" />
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(m => item.AddedDate)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1 shadow-sm">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1 shadow-sm">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger shadow-sm"
+                               onclick="return confirm('هل أنت متأكد من حذف المشاركة؟');">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @{
+        var modelList = Model.ToList();
+        var isFirstPage = modelList.Count < 5;
+        var nextPageId = modelList.LastOrDefault()?.Id ?? 0;
+    }
+
+    <div class="d-flex justify-content-center mt-5" data-aos="fade-up" data-aos-delay="500">
+        @if (isFirstPage)
+        {
+            <a asp-action="Index" asp-route-id="0" class="btn btn-outline-primary shadow-sm">
+                <i class="fa fa-angle-double-left"></i> الصفحة الأولى
+            </a>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-id="@nextPageId" class="btn btn-outline-success shadow-sm">
+                التالي <i class="fa fa-arrow-circle-left"></i>
+            </a>
+        }
+    </div>
+</section>
+

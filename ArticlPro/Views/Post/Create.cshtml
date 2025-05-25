@@ -1,0 +1,55 @@
+﻿@model ArticlPro.CoreView.AuthorPostView
+@inject ArticlPro.Data.IDataHelper<ArticlPro.Core.Category> datahelper
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="font-family:Cairo; color:#2980b9; margin-bottom: 20px;">إنشاء</h1>
+
+<h4 style="font-family:Cairo; color:#34495e; margin-bottom: 15px;">معلومات المشاركة</h4>
+<hr style="border-top: 2px solid #2980b9; margin-bottom: 25px;" />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data" style="font-family:Cairo;">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-4">
+                <label asp-for="PostCategory" class="control-label fw-bold"></label>
+                <select asp-for="PostCategory" asp-items="new SelectList(datahelper.GetAllData().Select(x=>x.Name))" class="form-control shadow-sm rounded" style="font-size: 1rem;"></select>
+                <span asp-validation-for="PostCategory" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="PostTitle" class="control-label fw-bold"></label>
+                <input asp-for="PostTitle" class="form-control shadow-sm rounded" style="font-size: 1rem;" />
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="PostDescription" class="control-label fw-bold"></label>
+                <textarea asp-for="PostDescription" class="form-control shadow-sm rounded" rows="5" style="font-size: 1rem;"></textarea>
+                <span asp-validation-for="PostDescription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="PostImageUrl" class="control-label fw-bold"></label>
+                <input asp-for="PostImageUrl" type="file" class="form-control shadow-sm rounded" />
+                <span asp-validation-for="PostImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="إنشاء" class="btn btn-primary px-5 py-2 rounded-pill fw-semibold" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="margin-top: 20px; font-family:Cairo;">
+    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 py-2">الرجوع إلى المشاركات</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

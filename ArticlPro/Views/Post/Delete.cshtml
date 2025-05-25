@@ -1,0 +1,58 @@
+﻿@model ArticlPro.Core.AuthorPost
+
+@{
+    ViewData["Title"] = "حذف";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="font-family:Cairo; color:#c0392b; margin-bottom: 20px;">حذف</h1>
+
+<h3 style="font-family:Cairo; color:#7f8c8d; margin-bottom: 25px;">هل أنت متأكد من هذا الإجراء؟</h3>
+
+<div style="font-family:Cairo; max-width: 700px; background: #fef9f9; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);">
+    <h4 style="color:#c0392b; margin-bottom: 15px;">AuthorPost</h4>
+    <hr style="border-top: 2px solid #c0392b; margin-bottom: 25px;" />
+
+    <dl class="row" style="font-size: 16px; color:#2c3e50;">
+        <dt class="col-sm-3 fw-bold">
+            @Html.DisplayNameFor(model => model.PostCategory)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PostCategory)
+        </dd>
+
+        <dt class="col-sm-3 fw-bold">
+            @Html.DisplayNameFor(model => model.PostTitle)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PostTitle)
+        </dd>
+
+        <dt class="col-sm-3 fw-bold">
+            @Html.DisplayNameFor(model => model.PostDescription)
+        </dt>
+        <dd class="col-sm-9" style="white-space: pre-line;">
+            @Html.DisplayFor(model => model.PostDescription)
+        </dd>
+
+        <dt class="col-sm-3 fw-bold">
+            صورة المشاركة
+        </dt>
+        <dd class="col-sm-9">
+            <img src="~/Images/@Model.PostImageUrl" alt="Post Image" class="img-thumbnail" style="max-width: 180px; border-radius: 10px;" />
+        </dd>
+
+        <dt class="col-sm-3 fw-bold">
+            @Html.DisplayNameFor(model => model.AddedDate)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.AddedDate)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" class="mt-4">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-semibold">حذف</button>
+        <a asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill ms-3">العودة إلى القائمة</a>
+    </form>
+</div>

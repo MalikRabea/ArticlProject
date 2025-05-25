@@ -1,0 +1,89 @@
+﻿@model ArticlPro.CoreView.AuthorView
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+
+@{
+    ViewData["Title"] = "تعديل";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+	var result = AuthorizationService.AuthorizeAsync(User, "Admin");
+}
+
+<section class="container py-4" style="font-family: 'Cairo', sans-serif;">
+    <h1 class="mb-4 text-center fw-bold">تعديل بيانات الناشر</h1>
+
+    <h4 class="mb-3">بيانات الناشر</h4>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit" enctype="multipart/form-data" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label"></label>
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProfileImageUrl" class="form-label"></label>
+                    <input asp-for="ProfileImageUrl" type="file" class="form-control" />
+                    <span asp-validation-for="ProfileImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Bio" class="form-label"></label>
+                    <textarea asp-for="Bio" rows="3" class="form-control"></textarea>
+                    <span asp-validation-for="Bio" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Facbook" class="form-label"></label>
+                    <input asp-for="Facbook" class="form-control" placeholder="رابط فيسبوك" />
+                    <span asp-validation-for="Facbook" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Instagram" class="form-label"></label>
+                    <input asp-for="Instagram" class="form-control" placeholder="رابط إنستغرام" />
+                    <span asp-validation-for="Instagram" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Twitter" class="form-label"></label>
+                    <input asp-for="Twitter" class="form-control" placeholder="رابط تويتر" />
+                    <span asp-validation-for="Twitter" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+@{
+    if (result.Result.Succeeded)
+    {
+        <div class="alert alert-success mt-4 text-center">
+           
+            <a asp-action="Index" class="btn btn-outline-primary mt-2">
+                <i class="bi bi-arrow-left-circle"></i> الرجوع إلى المستخدمين
+            </a>
+        </div>
+    }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

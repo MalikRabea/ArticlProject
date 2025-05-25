@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ArticlPro.Core.Author>
+
+@{
+	ViewData["Title"] = "البيانات";
+	Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="container py-4" style="font-family: 'Cairo', sans-serif; background-color: #f9f9f9; border-radius: 12px;">
+    <h1 class="mb-4 text-center fw-bold">بيانات الناشرون</h1>
+
+    <!-- نموذج البحث -->
+    <form method="get" asp-action="Search" class="d-flex mb-4 gap-2" role="search">
+        <input type="search" name="SearchItem" class="form-control" placeholder="ابحث عن ناشر..." aria-label="بحث">
+        <button type="submit" class="btn btn-primary px-4">بحث</button>
+    </form>
+
+    <!-- الجدول -->
+    <div class="table-responsive" data-aos="fade-up" data-aos-delay="400">
+        <table class="table table-hover align-middle text-center table-striped border shadow-sm">
+            <thead class="table-primary text-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.UserId)</th>
+                    <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                    <th>@Html.DisplayNameFor(model => model.ProfileImageUrl)</th>
+                    <th>@Html.DisplayNameFor(model => model.Bio)</th>
+                    <th>@Html.DisplayNameFor(model => model.Facbook)</th>
+                    <th>@Html.DisplayNameFor(model => model.Instagram)</th>
+                    <th>@Html.DisplayNameFor(model => model.Twitter)</th>
+                    <th>العمليات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                        <td>
+                            <img src="~/Images/@item.ProfileImageUrl" class="rounded-circle border" width="50" height="50" alt="صورة الناشر">
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Bio)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Facbook)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Instagram)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Twitter)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">تعديل</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">حذف</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- التصفح -->
+    <div class="d-flex justify-content-center mt-4">
+        @{
+            var modelList = Model.ToList();
+            bool isFirstPage = modelList.Count < 10;
+            int lastId = modelList.LastOrDefault()?.Id ?? 0;
+        }
+
+        @if (isFirstPage)
+        {
+            <a asp-action="Index" asp-route-id="0" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-bar-left"></i> الصفحة الأولى
+            </a>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-id="@lastId" class="btn btn-outline-success">
+                التالي <i class="bi bi-arrow-right-circle"></i>
+            </a>
+        }
+    </div>
+</section>
+
+

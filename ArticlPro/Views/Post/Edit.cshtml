@@ -1,0 +1,67 @@
+﻿@model ArticlPro.CoreView.AuthorPostView
+@inject ArticlPro.Data.IDataHelper<ArticlPro.Core.Category> datahelper
+
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="font-family:Cairo; color:#2c3e50; margin-bottom: 25px;">تعديل</h1>
+
+<h4 style="font-family:Cairo; color:#34495e; margin-bottom: 20px;">بيانات المشاركة</h4>
+<hr style="border-top: 2px solid #2980b9; margin-bottom: 30px;" />
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <form asp-action="Edit" enctype="multipart/form-data" style="font-family:Cairo; background: #f9fafb; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="Id" />
+            <input asp-for="UserId" type="hidden" />
+            <input asp-for="UserName" type="hidden" />
+            <input asp-for="FullName" type="hidden" />
+            <input asp-for="AddedDate" type="hidden" />
+            <input asp-for="AuthorId" type="hidden" />
+            <input asp-for="CategoryId" type="hidden" />
+
+            <div class="form-group mb-4">
+                <label asp-for="PostCategory" class="form-label fw-semibold" style="color: #2c3e50;"></label>
+                <select asp-for="PostCategory" asp-items="new SelectList(datahelper.GetAllData().Select(x => x.Name))" class="form-control rounded-pill border border-primary px-3 py-2" style="font-size: 16px;"></select>
+                <span asp-validation-for="PostCategory" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="PostTitle" class="form-label fw-semibold" style="color: #2c3e50;"></label>
+                <input asp-for="PostTitle" class="form-control rounded-pill border border-primary px-3 py-2" style="font-size: 16px;" />
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="PostDescription" class="form-label fw-semibold" style="color: #2c3e50;"></label>
+                <textarea asp-for="PostDescription" class="form-control rounded-3 border border-primary px-3 py-2" rows="5" style="font-size: 16px;"></textarea>
+                <span asp-validation-for="PostDescription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-5">
+                <label asp-for="PostImageUrl" class="form-label fw-semibold" style="color: #2c3e50;"></label>
+                <input asp-for="PostImageUrl" type="file" class="form-control rounded-pill border border-primary px-3 py-2" style="font-size: 16px;" />
+                <span asp-validation-for="PostImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-primary btn-lg w-100 rounded-pill" style="font-size: 18px; font-weight: 600;" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-4" style="font-family:Cairo;">
+    <a asp-action="Index" style="color: #2980b9; font-weight: 600; font-size: 16px; text-decoration: none;">
+        الرجوع الى المشاركات
+    </a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

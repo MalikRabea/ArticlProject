@@ -1,0 +1,162 @@
+﻿﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@inject ArticlPro.Data.IDataHelper<ArticlPro.Core.Author> datahelper
+@{
+    var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    int id = datahelper.GetAllData().Where(x => x.UserId == userid).Select(x => x.Id).First();
+    var result = AuthorizationService.AuthorizeAsync(User, "Admin");
+
+}
+
+<!DOCTYPE html>
+<html style="font-family: Cairo, sans-serif;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>مقالتي</title>
+    <meta name="description" content="موقع يسمح لك بنشر مقالات ومشاركتها مع الاخرين">
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="~/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="~/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="~/css/Animation-Cards-1.css">
+    <link rel="stylesheet" href="~/css/Animation-Cards.css">
+    <link rel="stylesheet" href="~/css/Article-Cards.css">
+    <link rel="stylesheet" href="~/css/Article-Clean.css">
+    <link rel="stylesheet" href="~/css/Article-List.css">
+    <link rel="stylesheet" href="~/css/Black-Navbar.css">
+    <link rel="stylesheet" href="~/css/dh-card-image-left-dark.css">
+    <link rel="stylesheet" href="~/css/dh-navbar-inverse.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="~/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="~/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="~/css/Navbar---Apple-1.css">
+    <link rel="stylesheet" href="~/css/Navbar---Apple.css">
+    <link rel="stylesheet" href="~/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="~/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="~/css/News-Cards.css">
+    <link rel="stylesheet" href="~/css/Off-Canvas-Sidebar-Drawer-Navbar.css">
+    <link rel="stylesheet" href="~/css/Responsive-UI-Card-02.css">
+    <link rel="stylesheet" href="~/css/Right-Sidebar.css">
+    <link rel="stylesheet" href="~/css/Sidebar-Menu-1.css">
+    <link rel="stylesheet" href="~/css/Sidebar-Menu.css">
+    <link rel="stylesheet" href="~/css/SIdebar-Responsive-2-1.css">
+    <link rel="stylesheet" href="~/css/SIdebar-Responsive-2.css">
+    <link rel="stylesheet" href="~/css/Sidebar-right-opening.css">
+    <link rel="stylesheet" href="~/css/Social-Icons.css">
+    <link rel="stylesheet" href="~/css/Soft-UI-Aside-Navbar.css">
+    <link rel="stylesheet" href="~/css/Studious-sidebar.css">
+    <link rel="stylesheet" href="~/css/Team-Boxed.css">
+    <link rel="stylesheet" href="~/css/Vertical-Left-SideBar-by-Jigar-Mistry.css">
+</head>
+
+<body style="font-family: Cairo;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow-sm" style="font-family: 'Cairo', sans-serif;">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/Index" style="font-size: 1.5rem; letter-spacing: 1px;">
+                ← الرجوع الى الصفحة
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-1" aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navcol-1">
+                <div class="d-flex gap-3">
+                    <a asp-controller="Author" asp-action="Edit" asp-route-id="@id" class="btn btn-outline-light px-4 py-2 rounded-pill shadow-sm" role="button">
+                        حسابي
+                    </a>
+                    @{
+                        if (result.Result.Succeeded)
+                        {
+                            <a href="/Author/Index" class="btn btn-outline-light px-4 py-2 rounded-pill shadow-sm" role="button">المستخدمين</a>
+                        }
+                    }
+                    <a href="/Post/Index" class="btn btn-outline-light px-4 py-2 rounded-pill shadow-sm" role="button">المقالات</a>
+                    @{
+                        if (result.Result.Succeeded)
+                        {
+                            <a href="/Category/Index" class="btn btn-outline-light px-4 py-2 rounded-pill shadow-sm" role="button">الاصناف</a>
+                        }
+                    }
+                    <a href="/AdminIndex" class="btn btn-danger px-4 py-2 rounded-pill shadow-sm text-white" role="button" style="font-weight: 600;">
+                        الرئيسة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4" style="font-family: 'Cairo', sans-serif; direction: rtl;">
+        @RenderBody()
+    </div>
+
+    <style>
+        /* تدرج ألوان خلفية النافبار */
+        .bg-gradient {
+            background: linear-gradient(90deg, #5a3f37, #2c7744);
+        }
+
+        /* تأثير تحريك عند مرور الماوس على الأزرار */
+        .btn-outline-light:hover {
+            background-color: #fff !important;
+            color: #2c7744 !important;
+            box-shadow: 0 4px 12px rgba(44, 119, 68, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #a83232 !important;
+            box-shadow: 0 4px 15px rgba(168, 50, 50, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* تظليل خفيف للنافبار */
+        .navbar {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+
+    <script>
+        // أنيميشن بسيط عند فتح القائمة في الأجهزة الصغيرة
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navCollapse = document.getElementById('navcol-1');
+
+        navbarToggler.addEventListener('click', () => {
+          if(navCollapse.classList.contains('show')){
+            navCollapse.classList.remove('animate__fadeInDown');
+          } else {
+            navCollapse.classList.add('animate__animated', 'animate__fadeInDown');
+          }
+        });
+    </script>
+
+    <!-- أضف animate.css للأنيميشن -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/js/bs-init-1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="~/js/Off-Canvas-Sidebar-Drawer-Navbar.js"></script>
+    <script src="~/js/freelancer.js"></script>
+    <script src="~/js/Off-Canvas-Sidebar-Drawer-Navbar-1.js"></script>
+    <script src="~/js/Studious-sidebar.js"></script>
+    <script src="~/js/bs-init.js"></script>
+    <script src="~/js/chart.min.js"></script>
+    <script src="~/js/Navbar---Apple.js"></script>
+    <script src="~/js/Right-Sidebar.js"></script>
+    <script src="~/js/Sidebar-Menu.js"></script>
+    <script src="~/js/Sidebar-right-opening.js"></script>
+    <script src="~/js/theme.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+﻿@model ArticlPro.Core.AuthorPost
+
+@{
+    ViewData["Title"] = "التفاصيل";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="font-family:Cairo; color:#2c3e50; margin-bottom: 20px;">التفاصيل</h1>
+
+<h3 style="font-family:Cairo; color:#34495e; margin-bottom: 25px;">تفاصيل المشاركة</h3>
+
+<div style="font-family:Cairo; max-width: 700px; background: #f7f9fc; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <h4 style="color:#2c3e50; margin-bottom: 15px;">AuthorPost</h4>
+    <hr style="border-top: 2px solid #2980b9; margin-bottom: 30px;" />
+
+    <dl class="row" style="font-size: 17px; color:#34495e;">
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.PostCategory)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PostCategory)
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.PostTitle)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PostTitle)
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.PostDescription)
+        </dt>
+        <dd class="col-sm-9" style="white-space: pre-line;">
+            @Html.DisplayFor(model => model.PostDescription)
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.PostImageUrl)
+        </dt>
+        <dd class="col-sm-9">
+            <img src="~/Images/@Model.PostImageUrl" class="img-thumbnail" style="max-width: 150px; height: auto; border-radius: 8px;" alt="Post Image" />
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">
+            @Html.DisplayNameFor(model => model.AddedDate)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.AddedDate)
+        </dd>
+    </dl>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4 py-2" style="font-weight: 600; font-size: 16px;">
+            الرجوع الى القائمة
+        </a>
+    </div>
+</div>

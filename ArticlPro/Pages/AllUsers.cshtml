@@ -1,0 +1,116 @@
+﻿@page
+@model ArticlPro.Pages.AllUsersModel
+@{
+}
+
+<section class="article-clean py-5" style="font-family: 'Cairo', sans-serif; background: #f8f9fa;" dir="rtl">
+    <div class="container">
+        <section class="team-boxed">
+            <div class="intro mb-4">
+                <h2 class="text-center fw-bold">ناشرونا</h2>
+            </div>
+
+            <form class="d-flex justify-content-center mb-4" method="get" target="_self" role="search" aria-label="Search Authors">
+                <input type="hidden" name="LoadState" value="Search" />
+                <input type="search" class="form-control me-2" id="search-field" name="search" placeholder="ابحث عن ناشر" aria-label="Search" style="max-width: 300px;">
+                <button type="submit" class="btn btn-danger px-4">بحث</button>
+            </form>
+
+            <div class="row g-4 justify-content-center">
+                @foreach (var item in Model.ListOfAuthor)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3" data-aos="zoom-out">
+                        <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-3">
+                            <img src="~/Images/@item.ProfileImageUrl" class="rounded-circle mx-auto d-block mb-3" alt="@item.FullName" style="width:120px; height:120px; object-fit: cover;">
+                            <h3 class="h5 fw-semibold mb-2">@item.FullName</h3>
+                            <p class="text-muted small mb-3" style="min-height: 72px;">@item.Bio</p>
+                            <div class="social-icons d-flex justify-content-center gap-3">
+                                @if (!string.IsNullOrEmpty(item.Facbook))
+                                {
+                                    <a href="@item.Facbook" target="_blank" rel="noopener" aria-label="Facebook" class="text-decoration-none text-primary fs-5">
+                                        <i class="fa fa-facebook-official"></i>
+                                    </a>
+                                }
+                                @if (!string.IsNullOrEmpty(item.Twitter))
+                                {
+                                    <a href="@item.Twitter" target="_blank" rel="noopener" aria-label="Twitter" class="text-decoration-none text-info fs-5">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                }
+                                @if (!string.IsNullOrEmpty(item.Instagram))
+                                {
+                                    <a href="@item.Instagram" target="_blank" rel="noopener" aria-label="Instagram" class="text-decoration-none text-danger fs-5">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <nav aria-label="Page navigation" class="mt-5 d-flex justify-content-center">
+                <ul class="pagination pagination-sm gap-3">
+                    <li class="page-item">
+                        <form method="get" class="d-inline">
+                            <input type="hidden" name="LoadState" value="All" />
+                            <button type="submit" class="btn btn-danger">الصفحة الأولى</button>
+                        </form>
+                    </li>
+
+                    @if (Model.ListOfAuthor.Count > 0)
+                    {
+                        <li class="page-item">
+                            <form method="get" class="d-inline">
+                                <input type="hidden" name="LoadState" value="Prev" />
+                                <input type="hidden" name="id" value="@Model.ListOfAuthor.First().Id" />
+                                <button type="submit" class="btn btn-danger">السابق</button>
+                            </form>
+                        </li>
+                    }
+
+                    @if (Model.ListOfAuthor.Count == Model.NoOfItem)
+                    {
+                        <li class="page-item">
+                            <form method="get" class="d-inline">
+                                <input type="hidden" name="LoadState" value="Next" />
+                                <input type="hidden" name="id" value="@Model.ListOfAuthor.Last().Id" />
+                                <button type="submit" class="btn btn-info">التالي</button>
+                            </form>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </section>
+    </div>
+</section>
+
+<style>
+    /* تحسين مظهر البطاقات */
+    .team-boxed .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .team-boxed .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    /* تحسين أيقونات التواصل */
+    .social-icons a {
+        transition: color 0.3s ease;
+    }
+
+        .social-icons a:hover {
+            color: #0d6efd !important;
+        }
+
+    .pagination .btn {
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .pagination .btn:hover {
+            filter: brightness(110%);
+            box-shadow: 0 0 8px rgba(0,0,0,0.15);
+        }
+</style>
