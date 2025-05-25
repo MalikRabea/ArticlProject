@@ -42,7 +42,9 @@ This project is a fully responsive, modern web application built to provide a pl
 - Designed with extensibility in mind, allowing easy addition of new features like comments, article ratings, or user profiles in future iterations.
 
 ---
-![articl 3](https://github.com/user-attachments/assets/5c3430bc-7016-46d5-858b-d9588c2a7ad1)
-![articl 2](https://github.com/user-attachments/assets/09faf2ec-e423-4f83-8886-6ba2d3afa8c9)
-![articl 1](https://github.com/user-attachments/assets/acc34332-ca47-4fd7-8f1f-6273a308c751)
+![Untitled design](https://github.com/user-attachments/assets/249acc85-d065-4b1a-b079-b09c2899d171)
+![Untitled design (1)](https://github.com/user-attachments/assets/06d69e97-0ba6-41b2-be20-347251ee071c)
+![articl 2](https://github.com/user-attachments/assets/0a9531fe-2fbd-48a8-8226-0d49640d37f2)
+![Untitled design (2)](https://github.com/user-attachments/assets/871bd9f5-d078-4ad0-be4c-1e83fe5b68ee)
+
 
