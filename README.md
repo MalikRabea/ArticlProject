@@ -42,9 +42,16 @@ This project is a fully responsive, modern web application built to provide a pl
 - Designed with extensibility in mind, allowing easy addition of new features like comments, article ratings, or user profiles in future iterations.
 
 ---
-![Untitled design](https://github.com/user-attachments/assets/249acc85-d065-4b1a-b079-b09c2899d171)
-![Untitled design (1)](https://github.com/user-attachments/assets/06d69e97-0ba6-41b2-be20-347251ee071c)
-![articl 2](https://github.com/user-attachments/assets/0a9531fe-2fbd-48a8-8226-0d49640d37f2)
-![Untitled design (2)](https://github.com/user-attachments/assets/871bd9f5-d078-4ad0-be4c-1e83fe5b68ee)
+![Screenshot 2025-05-25 102758](https://github.com/user-attachments/assets/caac343f-4c04-4cc1-a774-934713f8f2f9)
+![Screenshot 2025-05-29 052949](https://github.com/user-attachments/assets/76326cfc-d87f-44e8-b13e-e45dfc23c84d)
+![Screenshot 2025-05-25 102849](https://github.com/user-attachments/assets/5d5ec0ab-e410-415e-981f-ee5268f55640)
+![Screenshot 2025-05-25 102905](https://github.com/user-attachments/assets/63bec036-2431-4124-bce8-16b462d87a25)
+![Screenshot 2025-05-25 102921](https://github.com/user-attachments/assets/8a24b97d-6fe1-4408-8faa-4fb7d5523e9b)
+![Screenshot 2025-05-25 102921](https://github.com/user-attachments/assets/c4e08877-aa63-4e60-b65b-6ea24cd1a713)
+![Screenshot 2025-05-29 053310](https://github.com/user-attachments/assets/6f5e371a-4a52-45d9-be47-0aa15a17d4dc)
+![Screenshot 2025-05-25 102932](https://github.com/user-attachments/assets/da793978-977f-4ed6-a4a3-de178ba46f49)
+![Screenshot 2025-05-25 103000](https://github.com/user-attachments/assets/c497689b-f23e-43e5-b81d-b9975ee2d492)
+![Screenshot 2025-05-25 103006](https://github.com/user-attachments/assets/b40e0155-6a25-49f5-99a7-d5f44d8740d5)
+
 
 
