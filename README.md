@@ -46,7 +46,6 @@ This project is a fully responsive, modern web application built to provide a pl
 ![Screenshot 2025-05-29 052949](https://github.com/user-attachments/assets/76326cfc-d87f-44e8-b13e-e45dfc23c84d)
 ![Screenshot 2025-05-25 102849](https://github.com/user-attachments/assets/5d5ec0ab-e410-415e-981f-ee5268f55640)
 ![Screenshot 2025-05-25 102905](https://github.com/user-attachments/assets/63bec036-2431-4124-bce8-16b462d87a25)
-![Screenshot 2025-05-25 102921](https://github.com/user-attachments/assets/8a24b97d-6fe1-4408-8faa-4fb7d5523e9b)
 ![Screenshot 2025-05-25 102921](https://github.com/user-attachments/assets/c4e08877-aa63-4e60-b65b-6ea24cd1a713)
 ![Screenshot 2025-05-29 053310](https://github.com/user-attachments/assets/6f5e371a-4a52-45d9-be47-0aa15a17d4dc)
 ![Screenshot 2025-05-25 102932](https://github.com/user-attachments/assets/da793978-977f-4ed6-a4a3-de178ba46f49)
