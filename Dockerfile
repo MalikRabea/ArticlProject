@@ -1,27 +1,31 @@
-# Stage 1: Build the app
+# Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
-COPY *.sln .
-COPY ArticlPro/*.csproj ./ArticlPro/
+# نسخ ملفات المشاريع والحل
+COPY ArticlPro.sln ./
 COPY ArticlPro.Core/*.csproj ./ArticlPro.Core/
 COPY ArticlPro.Data/*.csproj ./ArticlPro.Data/
+COPY ArticlPro.Test/*.csproj ./ArticlPro.Test/
+
+# استرجاع البكجات
 RUN dotnet restore
 
-# Copy everything else and build
+# نسخ باقي الملفات
 COPY . .
-WORKDIR /app/ArticlPro
-RUN dotnet publish -c Release -o /app/publish --no-restore
 
-# Stage 2: Run the app
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+# بناء المشروع (Release)
+RUN dotnet publish ArticlPro.sln -c Release -o /app/publish
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
+
+# نسخ الناتج من مرحلة البناء
 COPY --from=build /app/publish .
 
-# Expose port
-EXPOSE 80
-ENV ASPNETCORE_URLS=http://+:80
+# تعيين المنفذ (غيره إذا مشروعك يستخدم منفذ آخر)
+EXPOSE 5000
 
-# Start the application
+# الأمر الافتراضي لتشغيل التطبيق
 ENTRYPOINT ["dotnet", "ArticlPro.dll"]
