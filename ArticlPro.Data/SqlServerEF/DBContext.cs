@@ -13,7 +13,7 @@ namespace ArticlPro.Data.SqlServerEF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Configure your database connection here
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-GQPMBB1;User Id=sa;Password=123456;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;DataBase=ArticlProDB; Persist Security Info=False");
+            optionsBuilder.UseNpgsql("");
         }
 
         public DbSet<Category> Category { get; set; }
