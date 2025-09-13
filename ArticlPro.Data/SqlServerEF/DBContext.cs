@@ -10,6 +10,9 @@ namespace ArticlPro.Data.SqlServerEF
 {
     public class DBContext : DbContext
     {
+        public DBContext(DbContextOptions<DBContext> options) : base(options)
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Configure your database connection here
