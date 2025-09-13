@@ -2,8 +2,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# نسخ ملفات المشاريع والحل
+# نسخ الحل وجميع مشاريعك
 COPY ArticlPro.sln ./
+COPY ArticlPro/*.csproj ./ArticlPro/
 COPY ArticlPro.Core/*.csproj ./ArticlPro.Core/
 COPY ArticlPro.Data/*.csproj ./ArticlPro.Data/
 COPY ArticlPro.Test/*.csproj ./ArticlPro.Test/
@@ -11,7 +12,7 @@ COPY ArticlPro.Test/*.csproj ./ArticlPro.Test/
 # استرجاع البكجات
 RUN dotnet restore
 
-# نسخ باقي الملفات
+# نسخ كل الملفات
 COPY . .
 
 # بناء المشروع (Release)
@@ -24,7 +25,7 @@ WORKDIR /app
 # نسخ الناتج من مرحلة البناء
 COPY --from=build /app/publish .
 
-# تعيين المنفذ (غيره إذا مشروعك يستخدم منفذ آخر)
+# تعيين المنفذ
 EXPOSE 5000
 
 # الأمر الافتراضي لتشغيل التطبيق
