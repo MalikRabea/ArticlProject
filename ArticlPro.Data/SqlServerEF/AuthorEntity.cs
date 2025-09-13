@@ -1,29 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArticlPro.Core;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArticlPro.Data.SqlServerEF
 {
     public class AuthorEntity : IDataHelper<Author>
     {
-        private  DBContext db;
-        private Author _table;
-        public AuthorEntity()
+        private readonly DBContext _db;
+
+        // استخدام DI لحقن DBContext
+        public AuthorEntity(DBContext dbContext)
         {
-            db = new DBContext();
-            
-            
+            _db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+
         public int Add(Author table)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                db.Author.Add(table);
-                return db.SaveChanges();
+                _db.Author.Add(table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -33,11 +31,11 @@ namespace ArticlPro.Data.SqlServerEF
 
         public int Delete(int Id)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                _table= Find(Id);
-                db.Author.Remove(_table);
-                return db.SaveChanges();
+                var _table = Find(Id);
+                _db.Author.Remove(_table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -47,11 +45,10 @@ namespace ArticlPro.Data.SqlServerEF
 
         public int Edit(int Id, Author table)
         {
-            db = new DBContext();
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                db.Author.Update(table);
-                return db.SaveChanges();
+                _db.Author.Update(table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -61,9 +58,10 @@ namespace ArticlPro.Data.SqlServerEF
 
         public Author Find(int Id)
         {
-           if(db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.Author.Where(x => x.Id == Id).First();
+                return _db.Author.FirstOrDefault(x => x.Id == Id)
+                       ?? throw new Exception("Author not found");
             }
             else
             {
@@ -73,9 +71,9 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<Author> GetAllData()
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.Author.ToList();
+                return _db.Author.ToList();
             }
             else
             {
@@ -85,23 +83,32 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<Author> GetDataByUser(string UserId)
         {
-            throw new NotImplementedException();
+            if (_db.Database.CanConnect())
+            {
+                return _db.Author.Where(x => x.UserId == UserId).ToList();
+            }
+            else
+            {
+                throw new Exception("Database connection failed");
+            }
         }
 
         public List<Author> Search(string SearchItem)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.Author.Where(
-                 x=>x.FullName.Contains(SearchItem)
-                || x.UserId.Contains(SearchItem)
-                || x.Bio.ToString().Contains(SearchItem)
-                || x.UserName.ToString().Contains(SearchItem)
-                || x.Facbook.ToString().Contains(SearchItem)
-                || x.Twitter.ToString().Contains(SearchItem)
-                || x.Instagram.ToString().Contains(SearchItem)
-                || x.Id.ToString().Contains(SearchItem))
-                .ToList();
+                return _db.Author
+                    .Where(x =>
+                        (x.FullName != null && x.FullName.Contains(SearchItem)) ||
+                        (x.UserId != null && x.UserId.Contains(SearchItem)) ||
+                        (x.Bio != null && x.Bio.Contains(SearchItem)) ||
+                        (x.UserName != null && x.UserName.Contains(SearchItem)) ||
+                        (x.Facbook != null && x.Facbook.Contains(SearchItem)) ||
+                        (x.Twitter != null && x.Twitter.Contains(SearchItem)) ||
+                        (x.Instagram != null && x.Instagram.Contains(SearchItem)) ||
+                        x.Id.ToString().Contains(SearchItem)
+                    )
+                    .ToList();
             }
             else
             {

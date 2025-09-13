@@ -13,11 +13,11 @@ namespace ArticlPro.Data.SqlServerEF
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Configure your database connection here
-            optionsBuilder.UseNpgsql("");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    // Configure your database connection here
+        //    optionsBuilder.UseNpgsql("");
+        //}
 
         public DbSet<Category> Category { get; set; }
 

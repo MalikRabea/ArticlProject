@@ -29,9 +29,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Injects Tables
-builder.Services.AddSingleton<IDataHelper<Category>, CategoryEntity>();
-builder.Services.AddSingleton<IDataHelper<Author>, AuthorEntity>();
-builder.Services.AddSingleton<IDataHelper<AuthorPost>, AuthorPostEntity>();
+builder.Services.AddScoped<IDataHelper<Category>, CategoryEntity>();
+builder.Services.AddScoped<IDataHelper<Author>, AuthorEntity>();
+builder.Services.AddScoped<IDataHelper<AuthorPost>, AuthorPostEntity>();
+
 
 // Authorization
 builder.Services.AddAuthorization(options =>

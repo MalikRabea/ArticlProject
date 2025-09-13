@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArticlPro.Core;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ArticlPro.Data.SqlServerEF
 {
     public class AuthorPostEntity : IDataHelper<AuthorPost>
     {
-        private  DBContext db;
-        private AuthorPost _table;
-        public AuthorPostEntity()
+        private readonly DBContext _db;
+
+        // تعديل الكونستركتور ليأخذ DBContext من DI
+        public AuthorPostEntity(DBContext dbContext)
         {
-            db = new DBContext();
-            
-            
+            _db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+
         public int Add(AuthorPost table)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                db.AuthorPost.Add(table);
-                return db.SaveChanges();
+                _db.AuthorPost.Add(table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -33,11 +30,11 @@ namespace ArticlPro.Data.SqlServerEF
 
         public int Delete(int Id)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                _table= Find(Id);
-                db.AuthorPost.Remove(_table);
-                return db.SaveChanges();
+                var _table = Find(Id);
+                _db.AuthorPost.Remove(_table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -47,11 +44,10 @@ namespace ArticlPro.Data.SqlServerEF
 
         public int Edit(int Id, AuthorPost table)
         {
-            db = new DBContext();
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                db.AuthorPost.Update(table);
-                return db.SaveChanges();
+                _db.AuthorPost.Update(table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -61,9 +57,10 @@ namespace ArticlPro.Data.SqlServerEF
 
         public AuthorPost Find(int Id)
         {
-           if(db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.AuthorPost.Where(x => x.Id == Id).First();
+                return _db.AuthorPost.FirstOrDefault(x => x.Id == Id)
+                    ?? throw new Exception("Record not found");
             }
             else
             {
@@ -73,9 +70,9 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<AuthorPost> GetAllData()
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.AuthorPost.ToList();
+                return _db.AuthorPost.ToList();
             }
             else
             {
@@ -85,9 +82,9 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<AuthorPost> GetDataByUser(string UserId)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.AuthorPost.Where(x=>x.UserId==UserId).ToList();
+                return _db.AuthorPost.Where(x => x.UserId == UserId).ToList();
             }
             else
             {
@@ -97,20 +94,20 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<AuthorPost> Search(string SearchItem)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.AuthorPost.Where(x =>
-               x.FullName.Contains(SearchItem)
-               || x.UserId.Contains(SearchItem)
-               || x.UserName.Contains(SearchItem)
-               || x.PostTitle.Contains(SearchItem)
-               || x.PostDescription.Contains(SearchItem)
-               || x.PostImageUrl.Contains(SearchItem)
-               || x.AuthorId.ToString().Contains(SearchItem)
-               || x.CategoryId.ToString().Contains(SearchItem)
-               || x.AddedDate.ToString().Contains(SearchItem)
-               || x.Id.ToString().Contains(SearchItem))
-               .ToList();
+                return _db.AuthorPost.Where(x =>
+                    x.FullName.Contains(SearchItem) ||
+                    x.UserId.Contains(SearchItem) ||
+                    x.UserName.Contains(SearchItem) ||
+                    x.PostTitle.Contains(SearchItem) ||
+                    x.PostDescription.Contains(SearchItem) ||
+                    x.PostImageUrl.Contains(SearchItem) ||
+                    x.AuthorId.ToString().Contains(SearchItem) ||
+                    x.CategoryId.ToString().Contains(SearchItem) ||
+                    x.AddedDate.ToString().Contains(SearchItem) ||
+                    x.Id.ToString().Contains(SearchItem)
+                ).ToList();
             }
             else
             {

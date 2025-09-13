@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArticlPro.Core;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ArticlPro.Data.SqlServerEF
 {
     public class CategoryEntity : IDataHelper<Category>
     {
-        private  DBContext db;
-        private Category _table;
-        public CategoryEntity()
+        private readonly DBContext _db;
+
+        // الكونستركتور الآن يأخذ DBContext من DI
+        public CategoryEntity(DBContext dbContext)
         {
-            db = new DBContext();
-            
-            
+            _db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+
         public int Add(Category table)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                db.Category.Add(table);
-                return db.SaveChanges();
+                _db.Category.Add(table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -33,11 +30,11 @@ namespace ArticlPro.Data.SqlServerEF
 
         public int Delete(int Id)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                _table= Find(Id);
-                db.Category.Remove(_table);
-                return db.SaveChanges();
+                var _table = Find(Id);
+                _db.Category.Remove(_table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -47,11 +44,10 @@ namespace ArticlPro.Data.SqlServerEF
 
         public int Edit(int Id, Category table)
         {
-            db = new DBContext();
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                db.Category.Update(table);
-                return db.SaveChanges();
+                _db.Category.Update(table);
+                return _db.SaveChanges();
             }
             else
             {
@@ -61,9 +57,10 @@ namespace ArticlPro.Data.SqlServerEF
 
         public Category Find(int Id)
         {
-           if(db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.Category.Where(x => x.Id == Id).First();
+                return _db.Category.FirstOrDefault(x => x.Id == Id)
+                       ?? throw new Exception("Record not found");
             }
             else
             {
@@ -73,9 +70,9 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<Category> GetAllData()
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.Category.ToList();
+                return _db.Category.ToList();
             }
             else
             {
@@ -90,11 +87,12 @@ namespace ArticlPro.Data.SqlServerEF
 
         public List<Category> Search(string SearchItem)
         {
-            if (db.Database.CanConnect())
+            if (_db.Database.CanConnect())
             {
-                return db.Category.Where(x=>x.Name.Contains(SearchItem)
-                || x.Id.ToString().Contains(SearchItem))
-                .ToList();
+                return _db.Category.Where(x =>
+                    x.Name.Contains(SearchItem) ||
+                    x.Id.ToString().Contains(SearchItem)
+                ).ToList();
             }
             else
             {
